@@ -21,10 +21,12 @@ void LU_Doolittle(realtype **MAT, int n)
 	        if (MAT[i][i]!=0.0) MAT[i][k] = (MAT[i][k] - sum) / MAT[i][i]; }
 	}
 }
-// *************************************************************
-// solve LUx = b, store x in b, if unresolve b[i] is set to zero
-// *************************************************************
-void LU_Solve(realtype **LU, realtype *b, int n)
+// **************************************************************
+
+// **************************************************************
+// Solve LU.x = b, store x in b, if unresolve b[i] is set to zero
+// **************************************************************
+void LU_bSolve(realtype **LU, realtype *b, int n)
 {
     for (int i = 0; i < n; i++)
     { realtype sum = 0.0;
@@ -35,6 +37,24 @@ void LU_Solve(realtype **LU, realtype *b, int n)
       for (int j = n-1; j > i; j--) sum += LU[j][i]*b[j] ;
       if (LU[i][i]!=0.0) b[i] = (b[i]-sum)/LU[i][i]; else b[i] = 0.0; }
 }
+// **************************************************************
+
+// **************************************************************
+// Solve LU.b = x, store x in b
+// **************************************************************
+void LU_xSolve(realtype **LU, realtype *b, int n)
+{
+    for (int i = 0; i < n; i++)
+    { realtype sum = 0.0;
+      for (int j = i; j < n; j++) sum += LU[j][i]*b[j] ;
+      b[i] = sum; }
+    for (int i = n-1; i>=0; i--)
+    { realtype sum = 0.0;
+      for (int j = i-1; j >=0; j--) sum += LU[j][i]*b[j] ;
+      b[i] += sum; }
+}
+// **************************************************************
+
 // *********************************
 // Print square matrix MAT, size n*n
 // *********************************
