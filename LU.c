@@ -5,6 +5,8 @@
 // **********************************************************************
 
 typedef double realtype;
+//typedef long double realtype;
+//typedef float realtype;
 
 // **************************************************************
 // Factorize square matrix MAT into LU, store LU in MAT[col][lin]
